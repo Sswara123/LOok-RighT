@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOoK RighT - FasHiOn AdVIsOr</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-pink-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-pink-500 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="home.html" class="text-2xl font-bold tracking-wide">LOok RighT</a>
+      <nav class="space-x-6 hidden md:block">
+        <a href="home.html" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">Styles</a>
+        <a href="#" class="hover:underline">About</a>
+        <a id="loginLink" href="login.html" class="hover:underline">Login</a>
+        <a id="signupLink" href="signup.html" class="hover:underline">Signup</a>
+        <span id="userGreeting" class="hidden">Welcome, <span id="usernameDisplay"></span> | <button onclick="logout()" class="underline">Logout</button></span>
+      </nav>
+      <div class="md:hidden">
+        <button id="mobileMenuToggle" class="focus:outline-none" aria-label="Toggle Mobile Menu">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!--chatbot script-->
+    <section>
+      <script>
+    const cacheName = 'dynamic-agent-v1';
+
+    const sanitizeVariables = (url, width, height) => {
+      try {
+        const sanitizedUrl = new URL(url);
+        const url = sanitizedUrl.toString();
+        const width = parseInt(width);
+        const height = parseInt(height);
+        return { url, width, height };
+      } catch (e) {
+        console.error('Error sanitizing variables', e);
+        return { url: '', width: 0, height: 0 };
+      }
+    };
+
+    const handlePictureInPictureRequest = async event => {
+      if (event.data.type !== 'jf-request-pip-window') {
+        return;
+      }
+      const { _url, _width, _height } = event.data;
+      const { url, width, height } = sanitizeVariables(_url, _width, _height);
+      if (url === '' || width === 0 || height === 0) {
+        return;
+      }
+      if ('documentPictureInPicture' in window) {
+        if (window.documentPictureInPicture.window) {
+          return;
+        }
+        const pipWindow = await window.documentPictureInPicture.requestWindow({
+          width,
+          height,
+          disallowReturnToOpener: true
+        });
+        [...document.styleSheets].forEach(styleSheet => {
+          try {
+            const cssRules = [...styleSheet.cssRules]
+              .map(rule => rule.cssText)
+              .join('');
+            const style = document.createElement('style');
+            style.textContent = cssRules;
+            pipWindow.document.head.appendChild(style);
+          } catch (e) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = styleSheet.type;
+            link.media = styleSheet.media;
+            link.href = styleSheet.href;
+            pipWindow.document.head.appendChild(link);
+          }
+        });
+        pipWindow.document.body.innerHTML = `<iframe src="${url}" style="width: ${width}px; height: ${height}px;" allow="microphone *; display-capture *;"></iframe>`;
+        return { success: true, isActive: false };
+      }
+    };
+
+    window.addEventListener('message', handlePictureInPictureRequest);
+
+    const src = "https://www.jotform.com/s/umd/00e85fe6d7f/for-embedded-agent.js";
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = function() {
+      window.AgentInitializer.init({
+        agentRenderURL: "https://www.jotform.com/agent/019836f0cb2e76ac875670d2dd82407047c7",
+        rootId: "JotformAgent-019836f0cb2e76ac875670d2dd82407047c7",
+        formID: "019836f0cb2e76ac875670d2dd82407047c7",
+        contextID: "0198373910fc7fa1b359ba25519d60c185e8",
+        initialContext: "",
+        queryParams: ["skipWelcome=1","maximizable=1","skipWelcome=1","maximizable=1'"],
+        domain: "https://www.jotform.com",
+        isDraggable: false,
+        background: "linear-gradient(180deg, #D3CBF4 0%, #D3CBF4 100%)",
+        buttonBackgroundColor: "#8797FF",
+        buttonIconColor: "#01091B",
+        inputTextColor: "#EAE9FF",
+        variant: false,
+        customizations: {"greeting":"Yes","greetingMessage":"Hello, gorgeous! I’m your StyleBot ","pulse":"Yes","position":"right"},
+        isVoice: false,
+        isVoiceWebCallEnabled: true
+      });
+    };
+    document.head.appendChild(script);
+  </script>
+    </section>
+
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 pb-4 space-y-2">
+      <a href="home.html" class="block text-white hover:underline">Home</a>
+      <a href="#" class="block text-white hover:underline">Styles</a>
+      <a href="#" class="block text-white hover:underline">About</a>
+      <a id="mobileLogin" href="login.html" class="block text-white hover:underline">Login</a>
+      <a id="mobileSignup" href="signup.html" class="block text-white hover:underline">Signup</a>
+      <span id="mobileGreeting" class="hidden text-white">Welcome, <span id="mobileUsername"></span> | <button onclick="logout()" class="underline">Logout</button></span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-cover bg-center h-96 flex items-center justify-center" style="background-image: url('assets/model1.jpg');">
+    <div class="bg-white bg-opacity-70 p-8 rounded-xl text-center">
+      <h1 class="text-5xl font-bold text-pink-600 mb-4">LOoK RighT </h1>
+      <p class="text-xl font-semibold"> SmArT FasHiOn RecOmenDer FoR BoDy AwaRe StyLinG</p>
+    </div>
+  </section>
+
+  <!-- Upload Section -->
+  <section class="max-w-4xl mx-auto my-10 bg-white p-6 rounded-xl shadow-md">
+    <h2 class="text-2xl font-bold text-center text-gray-700 mb-4">Upload Your Body Image</h2>
+    <div class="flex flex-col items-center">
+      <label for="imageUpload" class="mb-2 font-medium">Select an image:</label>
+      <input type="file" id="imageUpload" accept="image/*" class="mb-4 p-2 border rounded-md" />
+      <img id="previewImage" src="#" alt="Image Preview" class="hidden w-40 h-40 object-cover rounded-full border-4 border-pink-400">
+    </div>
+  </section>
+
+  <!-- Fashion Models -->
+  <section class="max-w-6xl mx-auto my-10">
+    <h2 class="text-3xl font-bold text-center text-pink-600 mb-6">Explore Styles</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="casual wear.avif" alt="Elegant Casual Wear" class="w-full h-64 object-cover" />
+        <div class="p-4 text-center font-semibold text-gray-700">Elegant Casual</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="Smart-Elegant.jpg" alt="Office Ready Style" class="w-full h-64 object-cover" />
+        <div class="p-4 text-center font-semibold text-gray-700">Office Ready</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="how-to-dress-to-a-party-style-tips-for-women.jpg" alt="Party Glam Style" class="w-full h-64 object-cover" />
+        <div class="p-4 text-center font-semibold text-gray-700">Party Glam</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-6 mt-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm mb-2 md:mb-0">&copy; 2025 StyleMe. All rights reserved.</p>
+      <div class="space-x-4 text-sm">
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Terms</a>
+        <a href="mailto:support@styleme.com" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Toggle mobile menu
+    document.getElementById("mobileMenuToggle").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
+    });
+
+    // Display user greeting if logged in
+    const user = localStorage.getItem("username");
+    if (user) {
+      document.getElementById("loginLink").style.display = "none";
+      document.getElementById("signupLink").style.display = "none";
+      document.getElementById("userGreeting").style.display = "inline";
+      document.getElementById("usernameDisplay").innerText = user;
+
+      document.getElementById("mobileLogin").style.display = "none";
+      document.getElementById("mobileSignup").style.display = "none";
+      document.getElementById("mobileGreeting").classList.remove("hidden");
+      document.getElementById("mobileUsername").innerText = user;
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem("username");
+      location.reload();
+    }
+
+    // Image Preview
+    const imageUpload = document.getElementById("imageUpload");
+    const previewImage = document.getElementById("previewImage");
+
+    imageUpload.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        previewImage.classList.remove("hidden");
+        reader.addEventListener("load", function () {
+          previewImage.setAttribute("src", this.result);
+        });
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

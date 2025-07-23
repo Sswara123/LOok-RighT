@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - StyleMe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-pink-50 flex items-center justify-center min-h-screen">
+
+  <!-- Login Card -->
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-pink-600 mb-6">Login to StyleMe</h2>
+
+    <form action="home.html">
+      <input type="email" placeholder="Email" class="input-field" required />
+      <input type="password" placeholder="Password" class="input-field" required />
+      <button type="submit" class="btn-pink">Login</button>
+    </form>
+
+    <p class="text-center mt-4 text-sm text-gray-600">
+      Don't have an account?
+      <a href="signup.html" class="text-purple-600 hover:underline font-semibold">Sign up</a>
+    </p>
+  </div>
+
+</body>
+</html>
